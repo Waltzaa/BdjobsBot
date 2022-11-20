@@ -83,7 +83,7 @@ print(n_df)
 print()
 print(f_df)
 
-time.sleep(86400)
+time.sleep(300)
 
 while True:
     # new featured jobs
@@ -132,7 +132,7 @@ while True:
 
     n_df = n_df4
     send_mail(f_df_new, n_df_new)
-    time.sleep(86400)
+    time.sleep(300)
 
 
 
