@@ -85,54 +85,54 @@ print(f_df)
 
 time.sleep(86400)
 
-while True:
-    # new featured jobs
-    f_job_list_new = []
-    f_jobs_new = soup.find_all('div', class_='col-sm-8 details')
-    for f_job in f_jobs_new:
-        f_job_title = f_job.find('div', class_='title').text
-        f_part = f_job.find('a').get('href')
-        f_link = f'https://jobs.bdjobs.com/{f_part}'
-        f_job_item = (f_job_title.strip(), f_link)
-        f_job_list_new.append(f_job_item)
 
-    f_df1 = pd.DataFrame(f_job_list_new, columns=[' ', ' '])
-    frames_f = [f_df1, f_df]
-    f_df2 = pd.concat(frames_f, ignore_index=True)
-    f_duplicate = f_df2[f_df2.duplicated(subset=None, keep=False)]
-    f_index = len(f_duplicate.index)
-    if f_index > 0:
-        i = f_duplicate.index[0]
-        f_df_new = f_df2.iloc[:i]
-    else:
-        f_df_new = f_df1
+# new featured jobs
+f_job_list_new = []
+f_jobs_new = soup.find_all('div', class_='col-sm-8 details')
+for f_job in f_jobs_new:
+    f_job_title = f_job.find('div', class_='title').text
+    f_part = f_job.find('a').get('href')
+    f_link = f'https://jobs.bdjobs.com/{f_part}'
+    f_job_item = (f_job_title.strip(), f_link)
+    f_job_list_new.append(f_job_item)
 
-    f_df = f_df1
+f_df1 = pd.DataFrame(f_job_list_new, columns=[' ', ' '])
+frames_f = [f_df1, f_df]
+f_df2 = pd.concat(frames_f, ignore_index=True)
+f_duplicate = f_df2[f_df2.duplicated(subset=None, keep=False)]
+f_index = len(f_duplicate.index)
+if f_index > 0:
+    i = f_duplicate.index[0]
+    f_df_new = f_df2.iloc[:i]
+else:
+    f_df_new = f_df1
 
-    # new normal jobs
-    n_job_list_new = []
-    n_jobs_new = soup.find_all('div', class_='col-sm-9 col-sm-pull-9')
-    for n_job in n_jobs_new:
-        n_job_title = n_job.find('div', class_='job-title-text').text
-        n_part = n_job.find('a').get('href')
-        n_link = f'https://jobs.bdjobs.com/{n_part}'
-        n_job_item = (n_job_title.strip(), n_link)
-        n_job_list_new.append(n_job_item)
+f_df = f_df1
 
-    n_df4 = pd.DataFrame(n_job_list_new, columns=[' ', ' '])
-    frames_n = [n_df4, n_df]
-    n_df5 = pd.concat(frames_n, ignore_index=True)
-    n_duplicate = n_df5[n_df5.duplicated(subset=None, keep=False)]
-    n_index = len(n_duplicate.index)
-    if n_index > 0:
-        i = n_duplicate.index[0]
-        n_df_new = n_df5.iloc[:i]
-    else:
-        n_df_new = n_df4
+# new normal jobs
+n_job_list_new = []
+n_jobs_new = soup.find_all('div', class_='col-sm-9 col-sm-pull-9')
+for n_job in n_jobs_new:
+    n_job_title = n_job.find('div', class_='job-title-text').text
+    n_part = n_job.find('a').get('href')
+    n_link = f'https://jobs.bdjobs.com/{n_part}'
+    n_job_item = (n_job_title.strip(), n_link)
+    n_job_list_new.append(n_job_item)
 
-    n_df = n_df4
-    send_mail(f_df_new, n_df_new)
-    time.sleep(86400)
+n_df4 = pd.DataFrame(n_job_list_new, columns=[' ', ' '])
+frames_n = [n_df4, n_df]
+n_df5 = pd.concat(frames_n, ignore_index=True)
+n_duplicate = n_df5[n_df5.duplicated(subset=None, keep=False)]
+n_index = len(n_duplicate.index)
+if n_index > 0:
+    i = n_duplicate.index[0]
+    n_df_new = n_df5.iloc[:i]
+else:
+    n_df_new = n_df4
+
+n_df = n_df4
+send_mail(f_df_new, n_df_new)
+time.sleep(86400)
 
 
 
